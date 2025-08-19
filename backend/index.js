@@ -32,7 +32,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage })
 
-//Creating upload endpoint for images
+//Creating upload endpoint for  Single images
 app.use('/images', express.static('upload/images'))
 app.post("/upload", upload.single('product'), (req, res) => {
     res.json({
@@ -110,6 +110,23 @@ app.post("/addproduct", async (req, res) => {
         name: req.body.name,
     })
 
+})
+// api for deletion
+
+app.post('/removeproduct', async (req, res) => {
+    await Product.findOneAndDelete({ id: req.body.id })
+    console.log("removed")
+    res.json({
+        success: true,
+        name: req.body.name
+    })
+})
+
+// creating api for getting all products
+app.get('/allproducts', async (req, res) => {
+    let products = await Product.find({})
+    console.log("All products fetched")
+    res.send(products)
 })
 
 app.listen(port, (error) => {
