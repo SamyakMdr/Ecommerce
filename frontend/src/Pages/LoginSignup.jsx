@@ -60,11 +60,18 @@ const LoginSignup = () => {
       <div className="loginsignup-container">
         <h1>{state}</h1>
         <div className="loginsignup-fields">
-          {state=="Sign Up"?<input name='username' value={formData.username} onChange={changeHandler} type="text" placeholder="Your Name" />:<></>}
+          {state==="Sign Up"?<input name='username' value={formData.username} onChange={changeHandler} type="text" placeholder="Your Name" />:<></>}
           <input name='email' value={formData.email} onChange={changeHandler} type="email" placeholder="Email" />
           <input name="password" value={formData.password} onChange={changeHandler} type="password" placeholder="Password" />
         </div>
-        <button onClick={()=>{state==="Login"?login():signup()}}>Continue</button>
+<button onClick={(e) => {
+  e.preventDefault();
+  state === "Login" ? login() : signup();
+}}>
+  Continue
+</button>
+
+
 
       {state === "Sign Up" ? (
   <p className="loginsignup-login">

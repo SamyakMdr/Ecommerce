@@ -18,10 +18,10 @@ const CartItems = () => {
          <hr />
 
      
-       {all_product.map((e) => {
+   {all_product.map((e) => {
   if (cartItems[e.id] > 0) {
     return (
-      <div>
+      <div key={e.id}>
         <div className="cartitems-format cartitems-format-main">
           <img src={e.image} alt={e.name} className='carticon-product-icon' />
           <p>{e.name}</p>
@@ -38,8 +38,9 @@ const CartItems = () => {
       </div>
     );
   }
-  return null; // render nothing if quantity is 0
+  return null;
 })}
+
 <div className="cartitems-down">
   <div className="cartitems-total">
     <h1>Cart Totals</h1>

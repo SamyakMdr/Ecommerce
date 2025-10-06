@@ -1,11 +1,11 @@
-.addproduct {
+.add-product {
     box-sizing: border-box;
     width: 100%;
     max-width: 800px;
     padding: 30px 50px;
     margin: 20px 30px;
     border-radius: 6px;
-    background: lightblue;
+    background: #ffffff;
 }
 
 .addproduct-itemfield {
@@ -39,10 +39,10 @@
     font-size: 14px;
     color: #7b7b7b;
     border: 1px solid #7b7b7b;
-    border-radius: 4px;
+    border-radius: 3px;
 }
 
-.addproduct-thumnail-image {
+.addproduct-thumnail-img {
     height: 120px;
     width: 120px;
     border-radius: 10px;
@@ -61,12 +61,4 @@
     color: white;
     font-size: 16px;
     font-weight: 500;
-}
-
-@media(max-width:800px) {
-    .addproduct {
-        width: auto;
-        padding: 30px;
-        margin: 20px;
-    }
 }
