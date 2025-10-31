@@ -8,47 +8,55 @@ const CartItems = () => {
   const { getTotalCartAmount, all_product, cartItems, removeFromCart } =
     useContext(ShopContext);
 
-  // ✅ eSewa v2 payment function
   const handleEsewaPayment = () => {
     const totalAmount = getTotalCartAmount().toString();
+    console.log("Initiating eSewa payment for amount:", totalAmount);
 
-    // Test URLs - use your actual domain
-    const successUrl = "https://yourdomain.com/success";
-    const failureUrl = "https://yourdomain.com/failure";
+    const successUrl = "http://localhost:4000/success";
+    const failureUrl = "http://localhost:4000/failure";
 
-    // Generate unique transaction ID
-    const transaction_uuid = "ORDER_" + Date.now();
+    // Get userId from localStorage (token decoded or stored earlier)
+    const token = localStorage.getItem("auth-token");
+    if (!token) {
+      alert("Please log in first.");
+      return;
+    }
 
-    // Your eSewa merchant credentials
+    // Extract userId from JWT token
+    const tokenPayload = JSON.parse(atob(token.split(".")[1]));
+    const userId = tokenPayload.user.id;
+
+    // Generate unique transaction UUID with userId
+    const transaction_uuid = `ORDER_${userId}_${Date.now()}`;
+    console.log("Transaction UUID:", transaction_uuid);
+
     const secretKey = "8gBm/:&EnhH.1/q";
     const product_code = "EPAYTEST";
 
-    // Generate signature for v2 API
+    // Signature creation
     const message = `total_amount=${totalAmount},transaction_uuid=${transaction_uuid},product_code=${product_code}`;
     const signature = CryptoJS.HmacSHA256(message, secretKey);
     const signatureBase64 = CryptoJS.enc.Base64.stringify(signature);
 
-    // Create a form element
+    // Prepare the form
     const form = document.createElement("form");
     form.method = "POST";
     form.action = "https://rc-epay.esewa.com.np/api/epay/main/v2/form";
 
-    // Required eSewa v2 fields
     const params = {
       amount: totalAmount,
       tax_amount: "0",
       total_amount: totalAmount,
       product_service_charge: "0",
       product_delivery_charge: "0",
-      transaction_uuid: transaction_uuid,
-      product_code: product_code,
+      transaction_uuid,
+      product_code,
       success_url: successUrl,
       failure_url: failureUrl,
       signed_field_names: "total_amount,transaction_uuid,product_code",
       signature: signatureBase64,
     };
 
-    // Add params to form
     for (const key in params) {
       const input = document.createElement("input");
       input.type = "hidden";
