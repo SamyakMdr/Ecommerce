@@ -1,0 +1,343 @@
+/* FailurePage.css */
+.failure-page {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, #fef7ff 0%, #f3f4f6 100%);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe System", "Segoe UI",
+    "Roboto", sans-serif;
+}
+
+.failure-card {
+  max-width: 500px;
+  width: 100%;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(220, 38, 38, 0.1), 0 5px 10px rgba(0, 0, 0, 0.05);
+  padding: 3rem 2.5rem;
+  text-align: center;
+  border: 1px solid #fecaca;
+  position: relative;
+  overflow: hidden;
+}
+
+.failure-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #dc2626, #ef4444, #dc2626);
+}
+
+.failure-icon {
+  font-size: 4rem;
+  margin-bottom: 1.5rem;
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+.failure-card h2 {
+  color: #dc2626;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.failure-card p {
+  color: #6b7280;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.transaction-id {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1.5rem 0;
+  text-align: left;
+}
+
+.transaction-id strong {
+  color: #374151;
+  font-weight: 600;
+}
+
+.transaction-id span {
+  color: #dc2626;
+  font-family: "Monaco", "Consolas", monospace;
+  font-size: 0.9rem;
+  word-break: break-all;
+}
+
+/* Loading State */
+.failure-page:has(.loading) {
+  background: transparent;
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  color: #6b7280;
+  font-size: 1.1rem;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #f3f4f6;
+  border-top: 3px solid #dc2626;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Action Buttons */
+.failure-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.try-again {
+  background: #dc2626;
+  color: white;
+  border: none;
+  padding: 0.875rem 2rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 140px;
+}
+
+.try-again:hover {
+  background: #b91c1c;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+}
+
+.try-again:active {
+  transform: translateY(0);
+}
+
+.continue {
+  background: transparent;
+  color: #374151;
+  border: 2px solid #d1d5db;
+  padding: 0.875rem 2rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 140px;
+}
+
+.continue:hover {
+  background: #374151;
+  color: white;
+  border-color: #374151;
+  transform: translateY(-2px);
+}
+
+.continue:active {
+  transform: translateY(0);
+}
+
+/* Reason-specific styling */
+.reason-note {
+  background: #fffbeb;
+  border: 1px solid #fed7aa;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+  text-align: left;
+}
+
+.reason-note h4 {
+  color: #ea580c;
+  margin: 0 0 0.5rem 0;
+  font-size: 1rem;
+}
+
+.reason-note p {
+  color: #92400e;
+  font-size: 0.9rem;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Support Section */
+.support-section {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.support-section p {
+  color: #6b7280;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.contact-support {
+  color: #dc2626;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: color 0.2s ease;
+}
+
+.contact-support:hover {
+  color: #b91c1c;
+  text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .failure-page {
+    padding: 1rem;
+    align-items: flex-start;
+    min-height: 100vh;
+  }
+
+  .failure-card {
+    padding: 2rem 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .failure-card h2 {
+    font-size: 1.75rem;
+  }
+
+  .failure-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .try-again,
+  .continue {
+    width: 100%;
+    max-width: 250px;
+  }
+}
+
+@media (max-width: 480px) {
+  .failure-card {
+    padding: 1.5rem 1rem;
+  }
+
+  .failure-card h2 {
+    font-size: 1.5rem;
+  }
+
+  .failure-card p {
+    font-size: 1rem;
+  }
+
+  .failure-icon {
+    font-size: 3rem;
+  }
+}
+
+/* Animation for card entrance */
+@keyframes cardEntrance {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.failure-card {
+  animation: cardEntrance 0.6s ease-out;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .failure-page {
+    background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+  }
+
+  .failure-card {
+    background: #374151;
+    border-color: #7f1d1d;
+  }
+
+  .failure-card h2 {
+    color: #f87171;
+  }
+
+  .failure-card p {
+    color: #d1d5db;
+  }
+
+  .transaction-id {
+    background: #7f1d1d;
+    border-color: #991b1b;
+  }
+
+  .transaction-id strong {
+    color: #f9fafb;
+  }
+
+  .continue {
+    color: #d1d5db;
+    border-color: #4b5563;
+  }
+
+  .continue:hover {
+    background: #4b5563;
+    color: white;
+  }
+
+  .reason-note {
+    background: #78350f;
+    border-color: #92400e;
+  }
+
+  .reason-note h4 {
+    color: #fdba74;
+  }
+
+  .reason-note p {
+    color: #fed7aa;
+  }
+}

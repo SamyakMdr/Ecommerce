@@ -1,0 +1,124 @@
+// language: puml
+// filepath: class-diagram.puml
+@startuml
+' Title
+title E-Commerce — Backend & Frontend Class Diagram
+
+' Backend models (from backend/index.js)
+class Product {
+  +id: Number
+  +name: String
+  +image: String
+  +category: String
+  +new_price: Number
+  +old_price: Number
+  +date: Date
+  +available: Boolean
+}
+
+class Users {
+  +_id: ObjectId
+  +name: String
+  +email: String
+  +password: String
+  +cartData: Map<int,int>
+  +date: Date
+}
+
+class Order {
+  +_id: ObjectId
+  +userId: ObjectId
+  +transactionUuid: String
+  +totalAmount: Number
+  +products: List<{id:int, quantity:int}>
+  +status: String
+  +date: Date
+}
+
+' Frontend context
+class ShopContext <<Context>> {
+  +all_product: Array<Product>
+  +cartItems: Map<int,int>
+  +addToCart(itemId)
+  +removeFromCart(itemId)
+  +getTotalCartAmount()
+  +getTotalCartItems()
+}
+
+' Pages
+class Shop
+class ShopCategory
+class ProductPage <<Page>>
+class Cart
+class LoginSignup
+class SuccessPage
+class FailurePage
+
+' Main components
+class Navbar
+class Hero
+class Popular
+class Offers
+class NewCollection
+class NewsLetter
+class Footer
+class Item
+class ProductDisplay
+class Breadcrum
+class CartItems
+class DescriptionBox
+
+' Relationships: frontend -> context / backend
+Shop --> Hero
+Shop --> Popular
+Shop --> Offers
+Shop --> NewCollection
+Shop --> NewsLetter
+Shop --> Footer
+
+ShopCategory --> Item
+ProductPage --> ProductDisplay
+ProductPage --> Breadcrum
+
+Navbar --> ShopContext : uses (getTotalCartItems)
+ProductDisplay --> ShopContext : uses (addToCart)
+CartItems --> ShopContext : uses (getTotalCartAmount, removeFromCart)
+LoginSignup --> Users : REST POST /signup, /login
+CartItems --> Order : initiates payment -> /success or /failure
+SuccessPage --> Order : GET /getorder?transactionUuid=...
+SuccessPage --> ShopContext : may call clearCart()
+
+' Backend endpoints (note)
+note right of Product
+  Endpoints in backend/index.js:
+  - GET /allproducts -> Product[]
+  - GET /newcollections -> Product[]
+  - GET /popularinwomen -> Product[]
+  - POST /addproduct -> create Product
+  - POST /removeproduct -> delete Product
+end note
+
+note right of Users
+  Auth & cart endpoints:
+  - POST /signup -> create Users, returns token
+  - POST /login -> returns token
+  - POST /addtocart (auth) -> modify Users.cartData
+  - POST /removefromcart (auth) -> modify Users.cartData
+  - POST /getcart (auth) -> return Users.cartData
+end note
+
+note right of Order
+  Payment callbacks:
+  - GET /success -> verifies signature, creates Order, clears Users.cartData
+  - GET /failure -> redirect to frontend failure page
+  - GET /getorder (auth) -> return Order by transactionUuid and userId
+end note
+
+' Associations
+Users "1" -- "0..*" Order : places >
+Users "1" -- "1" ShopContext : stores cartData (sync)
+Order "1" -- "0..*" Product : contains >
+
+' Styling
+skinparam classAttributeIconSize 0
+@enduml

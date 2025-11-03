@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import "./CSS/Failurepage.css";
 
 const FailurePage = () => {
   const location = useLocation();

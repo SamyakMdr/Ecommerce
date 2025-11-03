@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ShopContext } from "../Context/ShopContext"; // Assuming you have this for cart context
+import "./CSS/Successpage.css";
 
 const SuccessPage = () => {
   const location = useLocation();
@@ -83,7 +84,9 @@ const SuccessPage = () => {
           {/* Add more details like products if stored in order */}
         </div>
       )}
-      <button onClick={() => navigate("/")}>Continue Shopping</button>
+      <button className="continue" onClick={() => navigate("/")}>
+        Continue Shopping
+      </button>
     </div>
   );
 };
